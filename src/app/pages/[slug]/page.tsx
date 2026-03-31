@@ -1,10 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
-import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
-
-const prisma = new PrismaClient();
 
 const FALLBACK_PAGES: Record<string, { title: string, content: string }> = {
   'about': {
@@ -64,26 +61,10 @@ const FALLBACK_PAGES: Record<string, { title: string, content: string }> = {
 };
 
 export default async function StaticPage({ params }: { params: { slug: string } }) {
-  const url = `sylara.eu/pages/${params.slug}.html`;
-  const page = await prisma.staticPage.findUnique({
-    where: { url },
-  });
-
   let title = "";
   let contentHtml = "";
 
-  if (page) {
-    title = params.slug.replace(/-/g, ' ');
-    contentHtml = (page.content as any[])
-      .filter((t: any) => !t.text.includes("EUR") && !t.text.includes("Total items"))
-      .map((t: any) => {
-        if (t.tag === "h1") return `<h1 class="text-5xl font-heading mb-12 text-[#2A2A2A]">${t.text}</h1>`;
-        if (t.tag === "h2") return `<h2 class="text-3xl font-heading mt-16 mb-8 text-[#2A2A2A]">${t.text}</h2>`;
-        if (t.tag === "p") return `<p class="mb-6 leading-relaxed text-[#2A2A2A]/70 text-lg">${t.text}</p>`;
-        return `<div class="mb-4 text-[#2A2A2A]/70">${t.text}</div>`;
-      })
-      .join("");
-  } else if (FALLBACK_PAGES[params.slug]) {
+  if (FALLBACK_PAGES[params.slug]) {
     title = FALLBACK_PAGES[params.slug].title;
     contentHtml = FALLBACK_PAGES[params.slug].content;
   } else {

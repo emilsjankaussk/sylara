@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
 import AddToCartButton from "@/components/AddToCartButton";
-import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -14,13 +13,10 @@ import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import BundleOffers from "@/components/BundleOffers";
 import SubscriptionOffers from "@/components/SubscriptionOffers";
-
-const prisma = new PrismaClient();
+import { PRODUCTS } from "@/data/mockData";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
-  });
+  const product = PRODUCTS.find(p => p.slug === params.slug);
 
   if (!product) return { title: "Product Not Found" };
 
@@ -33,46 +29,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const getImagePath = (img: string) => {
-  if (!img) return '/assets/images/placeholder.webp';
-  const fileName = decodeURIComponent(img).split(/[??]/)[0].split('/').pop();
-  if (!fileName) return '/assets/images/placeholder.webp';
-  return `/assets/images/${fileName.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`;
-};
-
-const getTagsForProduct = (name: string) => {
-  const tags = [];
-  if (name.toLowerCase().includes('hyaluronic')) tags.push('Hyaluronic Acid', 'Deep Hydration');
-  else if (name.toLowerCase().includes('retinol') || name.toLowerCase().includes('night')) tags.push('Ceramides', 'Barrier Repair');
-  else if (name.toLowerCase().includes('cleanser')) tags.push('Prebiotics', 'Gentle Cleanse');
-  else tags.push('Botanical Actives', 'Daily Glow');
-  return tags;
-};
-
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
-    include: { categories: true }
-  });
+  const product = PRODUCTS.find(p => p.slug === params.slug);
 
   if (!product) {
     notFound();
   }
 
-  // Related products logic
-  const relatedProducts = await prisma.product.findMany({
-    where: {
-      categories: {
-        some: {
-          id: { in: product.categories.map(c => c.id) }
-        }
-      },
-      NOT: { id: product.id }
-    },
-    take: 4
-  });
-
-  const tags = getTagsForProduct(product.name);
+  // Related products logic (based on tags or just random others)
+  const relatedProducts = PRODUCTS.filter(p => p.id !== product.id).slice(0, 4);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FDFBF7] selection:bg-[#E07A5F] selection:text-white">
@@ -110,7 +75,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
                 <p className="text-2xl font-medium text-[#2A2A2A] mb-8">€{product.price?.toFixed(2)}</p>
                 
                 <div className="flex flex-wrap gap-2 mb-10">
-                  {tags.map(tag => (
+                  {product.tags.map(tag => (
                     <span key={tag} className="bg-white border border-[#2A2A2A]/5 text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm text-[#2A2A2A]/60">
                       {tag}
                     </span>
@@ -207,7 +172,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
                     name={rel.name}
                     price={rel.price || 0}
                     images={rel.images as string[]}
-                    tags={getTagsForProduct(rel.name)}
+                    tags={rel.tags}
                 />
             ))}
           </div>

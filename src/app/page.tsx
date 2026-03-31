@@ -6,26 +6,14 @@ import QuizStrip from "@/components/QuizStrip";
 import Reviews from "@/components/Reviews";
 import Newsletter from "@/components/Newsletter";
 import ProductCard from "@/components/ProductCard";
-import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
-
-const prisma = new PrismaClient();
-
-const getTagsForProduct = (name: string) => {
-  const tags = [];
-  if (name.toLowerCase().includes('hyaluronic')) tags.push('Hyaluronic Acid', 'Deep Hydration');
-  else if (name.toLowerCase().includes('retinol') || name.toLowerCase().includes('night')) tags.push('Ceramides', 'Barrier Repair');
-  else if (name.toLowerCase().includes('cleanser')) tags.push('Prebiotics', 'Gentle Cleanse');
-  else tags.push('Botanical Actives', 'Daily Glow');
-  return tags;
-};
+import { PRODUCTS } from "@/data/mockData";
 
 export default async function Home() {
-  const products = await prisma.product.findMany({
-    take: 4,
-  });
+  // Show first 4 products as bestsellers
+  const bestsellers = PRODUCTS.slice(0, 4);
 
   return (
     <main className="min-h-screen flex flex-col selection:bg-[#E07A5F] selection:text-white overflow-x-hidden">
@@ -113,7 +101,7 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-16">
-          {products.map((product) => (
+          {bestsellers.map((product) => (
             <ProductCard 
               key={product.id}
               id={product.id}
@@ -121,7 +109,7 @@ export default async function Home() {
               name={product.name}
               price={product.price || 0}
               images={product.images as string[]}
-              tags={getTagsForProduct(product.name)}
+              tags={product.tags}
             />
           ))}
         </div>

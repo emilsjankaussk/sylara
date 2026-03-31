@@ -1,31 +1,18 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
-import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-
-const prisma = new PrismaClient();
-
-const getImagePath = (img: string) => {
-  if (!img) return '/assets/images/placeholder.webp';
-  const fileName = decodeURIComponent(img).split(/[??]/)[0].split('/').pop();
-  if (!fileName) return '/assets/images/placeholder.webp';
-  return `/assets/images/${fileName.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`;
-};
+import { BLOG_POSTS } from "@/data/mockData";
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug },
-  });
+  const post = BLOG_POSTS.find(p => p.slug === params.slug);
 
   if (!post) {
     notFound();
   }
-
-  const imagePath = getImagePath(post.images[0]);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FDFBF7] selection:bg-[#E07A5F] selection:text-white">
@@ -43,7 +30,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
         <div className="container-normal px-4 mb-20">
           <div className="relative aspect-[21/9] bg-white overflow-hidden rounded-sm border border-[#2A2A2A]/5 shadow-xl">
-            <Image src={imagePath} alt={post.title} fill className="object-cover" priority />
+            <Image src={post.images[0]} alt={post.title} fill className="object-cover" priority />
           </div>
         </div>
 

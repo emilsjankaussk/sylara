@@ -2,19 +2,15 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
 import ProductCard from "@/components/ProductCard";
-import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-
-const prisma = new PrismaClient();
+import { PRODUCTS, CATEGORIES } from "@/data/mockData";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   if (params.slug === "all") return { title: "Shop All Products – SYLARA" };
 
-  const category = await prisma.category.findUnique({
-    where: { slug: params.slug },
-  });
+  const category = CATEGORIES.find(c => c.slug === params.slug);
 
   if (!category) return { title: "Category Not Found" };
 
@@ -23,46 +19,25 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const getTagsForProduct = (name: string) => {
-  const tags = [];
-  if (name.toLowerCase().includes('hyaluronic')) tags.push('Hyaluronic Acid', 'Deep Hydration');
-  else if (name.toLowerCase().includes('retinol') || name.toLowerCase().includes('night')) tags.push('Ceramides', 'Barrier Repair');
-  else if (name.toLowerCase().includes('cleanser')) tags.push('Prebiotics', 'Gentle Cleanse');
-  else tags.push('Botanical Actives', 'Daily Glow');
-  return tags;
-};
-
 export default async function CollectionPage({ params }: { params: { slug: string } }) {
   let products;
   let categoryName = "";
   let categoryDescription = "";
 
   if (params.slug === "all") {
-    products = await prisma.product.findMany();
+    products = PRODUCTS;
     categoryName = "All Products";
     categoryDescription = "Explore our complete range of bioactive skincare formulas, designed to support your skin's natural rhythm.";
-  } else if (params.slug === "bundles") {
-      // Handle the bundles link specifically if it's not a category in DB
-      const category = await prisma.category.findFirst({
-          where: { slug: { contains: 'box', mode: 'insensitive' } },
-          include: { products: true }
-      });
-      products = category?.products || [];
-      categoryName = "Bundles & Gifts";
-      categoryDescription = "Curated routines and sets to kickstart your SYLARA journey or share the glow with others.";
   } else {
-    const category = await prisma.category.findUnique({
-      where: { slug: params.slug },
-      include: { products: true },
-    });
+    const category = CATEGORIES.find(c => c.slug === params.slug);
 
     if (!category) {
       notFound();
     }
 
-    products = category.products;
+    products = PRODUCTS.filter(p => category.productIds.includes(p.id));
     categoryName = category.name;
-    categoryDescription = `Highly effective ${categoryName.toLowerCase()} solutions powered by nature and refined by science.`;
+    categoryDescription = category.description;
   }
 
   return (
@@ -106,7 +81,7 @@ export default async function CollectionPage({ params }: { params: { slug: strin
               name={product.name}
               price={product.price || 0}
               images={product.images as string[]}
-              tags={getTagsForProduct(product.name)}
+              tags={product.tags}
             />
           ))}
         </div>

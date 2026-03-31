@@ -1,25 +1,12 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-
-const prisma = new PrismaClient();
-
-const getImagePath = (img: string) => {
-  if (!img) return '/assets/images/placeholder.webp';
-  const fileName = decodeURIComponent(img).split(/[??]/)[0].split('/').pop();
-  if (!fileName) return '/assets/images/placeholder.webp';
-  return `/assets/images/${fileName.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`;
-};
+import { BLOG_POSTS } from "@/data/mockData";
 
 export default async function BlogListPage() {
-  const posts = await prisma.blogPost.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-
   return (
     <main className="min-h-screen flex flex-col bg-[#FDFBF7]">
       <TrustBar />
@@ -36,14 +23,12 @@ export default async function BlogListPage() {
 
       <section className="py-24 container-normal px-4 flex-grow">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
-          {posts.map((post) => {
-            const imagePath = getImagePath(post.images[0]);
-
+          {BLOG_POSTS.map((post) => {
             return (
               <Link key={post.id} href={`/blogs/news/${post.slug}`} className="group flex flex-col h-full">
                 <div className="relative aspect-[16/10] bg-white mb-8 overflow-hidden rounded-sm border border-[#2A2A2A]/5 shadow-sm">
                   <Image 
-                    src={imagePath} 
+                    src={post.images[0]} 
                     alt={post.title} 
                     fill 
                     className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
