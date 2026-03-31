@@ -7,6 +7,12 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCTS, CATEGORIES } from "@/data/mockData";
 
+export function generateStaticParams() {
+  const slugs = CATEGORIES.map((c) => ({ slug: c.slug }));
+  if (!slugs.find((s) => s.slug === "all")) slugs.push({ slug: "all" });
+  return slugs;
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   if (params.slug === "all") return { title: "Shop All Products – SYLARA" };
 

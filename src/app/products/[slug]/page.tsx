@@ -15,6 +15,10 @@ import BundleOffers from "@/components/BundleOffers";
 import SubscriptionOffers from "@/components/SubscriptionOffers";
 import { PRODUCTS } from "@/data/mockData";
 
+export function generateStaticParams() {
+  return PRODUCTS.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = PRODUCTS.find(p => p.slug === params.slug);
 

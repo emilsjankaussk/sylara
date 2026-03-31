@@ -3,6 +3,10 @@ import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
 import { notFound } from "next/navigation";
 
+export function generateStaticParams() {
+  return ['about', 'privacy-policy', 'terms-of-service', 'refund-policy', 'affiliates', 'b2b-wholesale'].map((slug) => ({ slug }));
+}
+
 const FALLBACK_PAGES: Record<string, { title: string, content: string }> = {
   'about': {
     title: 'Our Story',

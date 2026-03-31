@@ -7,6 +7,10 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { BLOG_POSTS } from "@/data/mockData";
 
+export function generateStaticParams() {
+  return BLOG_POSTS.map((p) => ({ slug: p.slug }));
+}
+
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = BLOG_POSTS.find(p => p.slug === params.slug);
 
