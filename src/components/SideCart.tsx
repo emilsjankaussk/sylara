@@ -141,7 +141,7 @@ export default function SideCart({ isOpen, onClose }: SideCartProps) {
                   </p>
                 ) : (
                   <p className="text-[10px] text-center text-[#8A9A86] uppercase tracking-widest font-bold">
-                    ✨ You've unlocked Free Shipping!
+                    ✨ You&apos;ve unlocked Free Shipping!
                   </p>
                 )}
 

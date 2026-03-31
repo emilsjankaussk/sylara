@@ -26,7 +26,7 @@ export default function Newsletter() {
         {subscribed ? (
           <div className="bg-white/10 p-6 rounded-sm backdrop-blur-sm inline-block mx-auto">
             <p className="flex items-center justify-center gap-2 text-lg font-medium">
-              <Check size={24} /> You're on the list! Check your inbox for your 10% off code.
+              <Check size={24} /> You&apos;re on the list! Check your inbox for your 10% off code.
             </p>
           </div>
         ) : (

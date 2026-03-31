@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           
           <div className="mt-24 pt-16 border-t border-[#2A2A2A]/10 flex flex-col items-center text-center">
               <h4 className="text-2xl font-heading mb-6">Discover the rituals behind the science.</h4>
-              <p className="text-[#2A2A2A]/50 text-base mb-10 max-w-sm">Every formula mentioned is designed to reveal your skin's soft strength.</p>
+              <p className="text-[#2A2A2A]/50 text-base mb-10 max-w-sm">Every formula mentioned is designed to reveal your skin&apos;s soft strength.</p>
               <Link href="/collections/all" className="inline-flex px-10 py-5 bg-[#2A2A2A] text-white uppercase tracking-widest text-[11px] font-bold hover:bg-[#E07A5F] transition-all rounded-sm shadow-xl hover:shadow-[#E07A5F]/20">
                   Shop the Collection
               </Link>

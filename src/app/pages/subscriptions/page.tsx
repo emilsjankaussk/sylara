@@ -81,14 +81,14 @@ export default function SubscriptionLanding() {
                   <span className="text-4xl font-heading italic text-white/30">01</span>
                   <div>
                     <h4 className="text-xl font-heading mb-2">Choose Your Essentials</h4>
-                    <p className="text-white/70 text-sm leading-relaxed">Select "Subscribe & Save" on any product page. Build a routine that fits your unique skin needs.</p>
+                    <p className="text-white/70 text-sm leading-relaxed">Select &quot;Subscribe &amp; Save&quot; on any product page. Build a routine that fits your unique skin needs.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
                   <span className="text-4xl font-heading italic text-white/30">02</span>
                   <div>
                     <h4 className="text-xl font-heading mb-2">Set Your Frequency</h4>
-                    <p className="text-white/70 text-sm leading-relaxed">Most customers prefer delivery every 30 or 60 days. You're in control of the pace.</p>
+                    <p className="text-white/70 text-sm leading-relaxed">Most customers prefer delivery every 30 or 60 days. You&apos;re in control of the pace.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">

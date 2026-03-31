@@ -79,7 +79,7 @@ export default async function Home() {
           </h1>
           
           <p className="text-xl md:text-2xl text-[#1A1A1A] mb-12 leading-relaxed font-bold max-w-2xl mx-auto drop-shadow-sm">
-            Experience the harmony of bio-active prebiotics and botanical extracts. Formulated in the EU to nurture your skin's natural resilience.
+            Experience the harmony of bio-active prebiotics and botanical extracts. Formulated in the EU to nurture your skin&apos;s natural resilience.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-6">
@@ -196,7 +196,7 @@ export default async function Home() {
               </div>
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A9A86] mb-4 block">Daily Rituals • 4 Min Read</span>
               <h3 className="text-3xl font-heading mb-4 group-hover:text-[#E07A5F] transition-colors leading-tight">The Perfect 3-Step AM Routine for Glowing Skin</h3>
-              <p className="text-[#2A2A2A]/60 text-lg leading-relaxed">Keep it simple but effective. Here's exactly what you need every morning to protect and hydrate your skin all day long.</p>
+              <p className="text-[#2A2A2A]/60 text-lg leading-relaxed">Keep it simple but effective. Here&apos;s exactly what you need every morning to protect and hydrate your skin all day long.</p>
             </Link>
           </div>
         </div>

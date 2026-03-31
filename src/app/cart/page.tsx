@@ -7,7 +7,7 @@ import { useCart } from "@/store/useCart";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck, Truck, Sparkles } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck, Truck, Sparkles, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CartUpsell from "@/components/CartUpsell";
 

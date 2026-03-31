@@ -168,14 +168,14 @@ export default async function ProductPage({ params }: { params: { slug: string }
                         <Sparkles className="text-[#E07A5F]" size={32} strokeWidth={1} />
                     </div>
                     <h3 className="text-2xl font-heading mb-4">Glow Sustainably</h3>
-                    <p className="text-[#2A2A2A]/60 text-sm leading-relaxed">Our formulas are designed to reveal your skin's natural radiance without compromising long-term barrier health.</p>
+                    <p className="text-[#2A2A2A]/60 text-sm leading-relaxed">Our formulas are designed to reveal your skin&apos;s natural radiance without compromising long-term barrier health.</p>
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mb-8">
                         <ShieldCheck className="text-[#8A9A86]" size={32} strokeWidth={1} />
                     </div>
                     <h3 className="text-2xl font-heading mb-4">Barrier Support</h3>
-                    <p className="text-[#2A2A2A]/60 text-sm leading-relaxed">Infused with prebiotics that feed your skin's microbiome, creating a resilient shield against environmental stressors.</p>
+                    <p className="text-[#2A2A2A]/60 text-sm leading-relaxed">Infused with prebiotics that feed your skin&apos;s microbiome, creating a resilient shield against environmental stressors.</p>
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mb-8">
