@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push": "./node_modules/.bin/prisma db push",
-    "db:seed": "./node_modules/.bin/prisma db seed"
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "env:check": "pwd && ls -la && ls -la node_modules/.bin/prisma || echo 'Prisma not found'"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
